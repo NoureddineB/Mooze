@@ -1,11 +1,9 @@
-package com.project.mooze.Model;
+package com.project.mooze.Model.User;
 
-
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Restaurent {
+public class Propreties {
 
     @SerializedName("id")
     @Expose
@@ -34,27 +32,7 @@ public class Restaurent {
     @SerializedName("discountId")
     @Expose
     private Integer discountId;
-    @SerializedName("restaurantTables")
-    @Expose
-    private List<Object> restaurantTables = null;
-    @SerializedName("restaurantStarters")
-    @Expose
-    private List<Object> restaurantStarters = null;
-    @SerializedName("drinks")
-    @Expose
-    private List<Object> drinks = null;
-    @SerializedName("desserts")
-    @Expose
-    private List<Object> desserts = null;
-    @SerializedName("mains")
-    @Expose
-    private List<Object> mains = null;
-    @SerializedName("menus")
-    @Expose
-    private List<Object> menus = null;
-    @SerializedName("orders")
-    @Expose
-    private List<Order> orders = null;
+
 
     public Integer getId() {
         return id;
@@ -129,61 +107,5 @@ public class Restaurent {
     }
 
 
-
-    public List<Object> getRestaurantTables() {
-        return restaurantTables;
-    }
-
-    public void setRestaurantTables(List<Object> restaurantTables) {
-        this.restaurantTables = restaurantTables;
-    }
-
-    public List<Object> getRestaurantStarters() {
-        return restaurantStarters;
-    }
-
-    public void setRestaurantStarters(List<Object> restaurantStarters) {
-        this.restaurantStarters = restaurantStarters;
-    }
-
-    public List<Object> getDrinks() {
-        return drinks;
-    }
-
-    public void setDrinks(List<Object> drinks) {
-        this.drinks = drinks;
-    }
-
-    public List<Object> getDesserts() {
-        return desserts;
-    }
-
-    public void setDesserts(List<Object> desserts) {
-        this.desserts = desserts;
-    }
-
-    public List<Object> getMains() {
-        return mains;
-    }
-
-    public void setMains(List<Object> mains) {
-        this.mains = mains;
-    }
-
-    public List<Object> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Object> menus) {
-        this.menus = menus;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 
 }

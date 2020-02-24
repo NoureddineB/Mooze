@@ -1,10 +1,9 @@
-package com.project.mooze.Model;
+package com.project.mooze.Model.User;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Order {
-
+public class UserOrder {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -115,5 +114,4 @@ public class Order {
     public void setRestaurantId(Integer restaurantId) {
         this.restaurantId = restaurantId;
     }
-
 }

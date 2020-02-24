@@ -1,9 +1,9 @@
-package com.project.mooze.Model;
+package com.project.mooze.Model.Restaurent;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Propreties {
+public class Topping {
 
     @SerializedName("id")
     @Expose
@@ -11,28 +11,24 @@ public class Propreties {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("address")
+    @SerializedName("price")
     @Expose
-    private String address;
+    private Double price;
     @SerializedName("imageUrl")
     @Expose
     private String imageUrl;
-    @SerializedName("latitude")
-    @Expose
-    private Double latitude;
-    @SerializedName("longitude")
-    @Expose
-    private Double longitude;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("discountId")
+    @SerializedName("starterId")
     @Expose
-    private Integer discountId;
-
+    private Object starterId;
+    @SerializedName("mainId")
+    @Expose
+    private Integer mainId;
 
     public Integer getId() {
         return id;
@@ -50,12 +46,12 @@ public class Propreties {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public String getImageUrl() {
@@ -64,22 +60,6 @@ public class Propreties {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public String getCreatedAt() {
@@ -98,14 +78,19 @@ public class Propreties {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getDiscountId() {
-        return discountId;
+    public Object getStarterId() {
+        return starterId;
     }
 
-    public void setDiscountId(Integer discountId) {
-        this.discountId = discountId;
+    public void setStarterId(Object starterId) {
+        this.starterId = starterId;
     }
 
+    public Integer getMainId() {
+        return mainId;
+    }
 
-
+    public void setMainId(Integer mainId) {
+        this.mainId = mainId;
+    }
 }

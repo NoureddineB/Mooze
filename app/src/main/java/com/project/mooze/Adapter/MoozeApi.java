@@ -1,15 +1,21 @@
 package com.project.mooze.Adapter;
 
 
-import com.project.mooze.Model.User;
+import com.project.mooze.Model.Order.Order;
+import com.project.mooze.Model.Restaurent.Restaurent;
+import com.project.mooze.Model.User.User;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -23,9 +29,23 @@ public interface MoozeApi {
     @GET("user")
     Observable<List<User>> getAllUser();
 
+    @GET("restaurant")
+    Observable<List<Restaurent>> getAllRestaurent();
+
+    @GET("restaurant/{restoid}")
+    Observable<Restaurent> getRestaurent(@Path("restoid") int id);
+
+    @POST("order")
+    Observable<Order> postOrder(@Body Order order, @Query("userId") int userId,@Query("restaurantId") int restaurantId);
+
+
+
+    OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS).build();
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(url)
+            .baseUrl(url).client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();

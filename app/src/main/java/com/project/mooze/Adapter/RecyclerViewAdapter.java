@@ -7,21 +7,25 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.project.mooze.Model.User;
+import com.bumptech.glide.RequestManager;
+import com.project.mooze.Model.Restaurent.Restaurent;
+import com.project.mooze.Model.User.User;
 import com.project.mooze.R;
 
 import java.util.List;
 
-public class RecyclerNearAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     // FOR DATA
 
-    private List<User> users;
+    private List<Restaurent> restaurents;
+    private RequestManager glide;
 
 
     // CONSTRUCTOR
 
-    public RecyclerNearAdapter(List<User> users) {
-        this.users = users;
+    public RecyclerViewAdapter(List<Restaurent> restaurents,RequestManager glide) {
+        this.restaurents = restaurents;
+        this.glide = glide;
 
     }
 
@@ -37,25 +41,25 @@ public class RecyclerNearAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     }
 
 
-    // UPDATE VIEW HOLDER WITH A GITHUBUSER
+
 
     @Override
     public void onBindViewHolder(RecyclerViewHolder viewHolder, int position) {
-        viewHolder.updateTitle(this.users.get(position));
+        viewHolder.updateCardUI(this.restaurents.get(position),this.glide);
 
     }
 
 
-    // RETURN THE TOTAL COUNT OF ITEMS IN THE LIST
+
 
     @Override
 
     public int getItemCount() {
-        return this.users.size();
+        return this.restaurents.size();
 
     }
 
-    public User getUser(int position){
-        return this.users.get(position);
+    public Restaurent getRestaurents(int position){
+        return this.restaurents.get(position);
     }
 }

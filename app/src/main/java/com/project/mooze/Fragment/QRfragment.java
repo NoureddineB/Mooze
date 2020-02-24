@@ -32,20 +32,23 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.project.mooze.R;
 
 import java.io.IOException;
+import java.util.Objects;
+import java.util.zip.Inflater;
 
 import javax.xml.transform.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static androidx.core.content.ContextCompat.checkSelfPermission;
 
 
 public class QRfragment extends Fragment implements ZXingScannerView.ResultHandler {
 
 
-
     private ZXingScannerView mScannerView;
     private static final int PERMISSION_REQUEST_CODE = 200;
+    private View qr_fragment;
 
 
     public QRfragment() {
@@ -56,7 +59,6 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
     public static QRfragment newInstance(String param1, String param2) {
         QRfragment fragment = new QRfragment();
         Bundle args = new Bundle();
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,21 +66,30 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        checkPermission();
+        checkUserCameraPermissions();
         mScannerView = new ZXingScannerView(getActivity());
-        manageCamera();
-        View v = mScannerView;
-        return v;
+        qr_fragment = inflater.inflate(R.layout.fragment_qrfragment, container, false);
+
+        //If the user dont give the acces to his camera we show another layout telling him he need to if he want to use QR reader
+        if (checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            checkUserCameraPermissions();
+            return qr_fragment;
+        } else {
+            manageCamera();
+            return mScannerView;
+        }
+
 
     }
 
-    private void manageCamera(){
-        if (!checkIfVisible()){
+
+    private void manageCamera() {
+        if (!checkIfVisible()) {
             mScannerView.stopCamera();
         }
     }
 
-    private boolean checkIfVisible(){
+    private boolean checkIfVisible() {
         SharedPreferences preferences = getActivity().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         return preferences.getBoolean("isQRcode", true);
     }
@@ -95,6 +106,7 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
         super.onPause();
         mScannerView.stopCamera();           // Stop camera on pause
     }
+
     @Override
     public void handleResult(com.google.zxing.Result rawResult) {
         Vibrator vibrator = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
@@ -105,46 +117,33 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
         mScannerView.resumeCameraPreview(this);
     }
 
-    private boolean checkPermission() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
+    private boolean checkUserCameraPermissions() {
+        if (checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+            } else {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CODE);
+            }
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
-                PERMISSION_REQUEST_CODE);
-    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
+            case PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Permission Granted", Toast.LENGTH_SHORT).show();
 
-                    // main logic
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-                                != PackageManager.PERMISSION_GRANTED) {
-                            showMessageOKCancel("You need to allow access permissions",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                requestPermission();
-                                            }
-                                        }
-                                    });
-                        }
-                    }
+
                 }
-                break;
+                return;
+            }
+
         }
     }
 
@@ -157,7 +156,6 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
                 .create()
                 .show();
     }
-
 
 
 }

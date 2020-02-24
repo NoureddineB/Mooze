@@ -1,6 +1,8 @@
 package com.project.mooze.Activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,11 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     final Fragment fragment_map = new MapFragment();
     final Fragment fragment_QR = new QRfragment();
     final Fragment fragment_settings = new SettingsFragment();
+    private static final int REQUEST_CODE_MAP = 200;
     final FragmentManager fm = getSupportFragmentManager();
 
 
@@ -45,31 +50,29 @@ public class HomeActivity extends AppCompatActivity {
         setFragment();
 
 
-
-
-
     }
 
     //Configure fragment manager and add the fragment
-    private void setFragment(){
+    private void setFragment() {
         fm.beginTransaction().add(R.id.main_frame_layout, fragment_settings, "4").hide(fragment_settings).commit();
         fm.beginTransaction().add(R.id.main_frame_layout, fragment_QR, "3").hide(fragment_QR).commit();
         fm.beginTransaction().add(R.id.main_frame_layout, fragment_map, "2").hide(fragment_map).commit();
-        fm.beginTransaction().add(R.id.main_frame_layout,fragment_main, "1").commit();
+        fm.beginTransaction().add(R.id.main_frame_layout, fragment_main, "1").commit();
 
     }
+
     //Configure Bottom Navigation
-    private void configureBottomNav(){
+    private void configureBottomNav() {
         BottomNavigationView navView = findViewById(R.id.navigation);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     //Check if the current fragment is fragment_qrcode and save it in shared preferences
-    private void checkifQRcode(){
+    private void checkifQRcode() {
         SharedPreferences preferences = this.getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         isQRcode = active == fragment_QR;
-        editor.putBoolean("isQRcode",isQRcode);
+        editor.putBoolean("isQRcode", isQRcode);
         editor.apply();
     }
 

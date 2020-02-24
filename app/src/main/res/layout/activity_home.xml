@@ -25,7 +25,7 @@
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/foot_barre2"
+        android:background="@drawable/rectangle"
         app:itemIconTint="@color/colorWhite"
         app:itemTextColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"

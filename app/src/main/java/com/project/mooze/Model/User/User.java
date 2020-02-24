@@ -1,10 +1,11 @@
-package com.project.mooze.Model;
+package com.project.mooze.Model.User;
 
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.project.mooze.Model.Favourites.Favourite;
+import com.project.mooze.Model.Order.Order;
 
 public class User {
 
