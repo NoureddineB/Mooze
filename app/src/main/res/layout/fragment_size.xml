@@ -13,10 +13,10 @@
 
        <ImageView
            android:id="@+id/imageView7"
-           android:layout_width="123dp"
-           android:layout_height="116dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
            android:layout_marginTop="80dp"
-           android:src="@drawable/success"
+           android:src="@drawable/menu3"
            app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintHorizontal_bias="0.227"
            app:layout_constraintStart_toStartOf="parent"
@@ -24,23 +24,21 @@
 
        <ImageView
            android:id="@+id/imageView5"
-           android:layout_width="107dp"
-           android:layout_height="88dp"
-           android:layout_marginTop="52dp"
-           android:src="@drawable/success"
+           android:layout_width="133dp"
+           android:layout_height="136dp"
+           android:src="@drawable/menu2"
            app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.23"
+           app:layout_constraintHorizontal_bias="0.207"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
        <ImageView
            android:id="@+id/imageView6"
-           android:layout_width="75dp"
-           android:layout_height="78dp"
-           android:layout_marginTop="52dp"
-           android:src="@drawable/success"
+           android:layout_width="112dp"
+           android:layout_height="136dp"
+           android:src="@drawable/menu"
            app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.235"
+           app:layout_constraintHorizontal_bias="0.197"
            app:layout_constraintStart_toStartOf="parent"
            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
@@ -105,7 +103,8 @@
            android:text="(8.40€)"
            app:layout_constraintBottom_toBottomOf="@+id/imageView7"
            app:layout_constraintStart_toEndOf="@+id/imageView7"
-           app:layout_constraintTop_toBottomOf="@+id/textView8" />
+           app:layout_constraintTop_toBottomOf="@+id/textView8"
+           app:layout_constraintVertical_bias="0.153" />
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 

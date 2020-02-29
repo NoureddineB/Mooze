@@ -17,6 +17,8 @@ import androidx.core.content.ContextCompat;
 
 public class Utils {
 
+    public static final String stripe_key = "pk_test_X72hcI4fGnsFcZhUxnY2R7Dl";
+
     public static void hideStatusBar(Activity activity){
         View decorView = activity.getWindow().getDecorView();
         // Hide the status bar.

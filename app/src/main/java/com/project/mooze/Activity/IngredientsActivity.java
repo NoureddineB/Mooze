@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
-import com.project.mooze.Adapter.IngredientAdapters.RecyclerIngredientsAdapter;
+import com.project.mooze.Adapter.RecyclerIngredientsAdapter;
 import com.project.mooze.Model.Restaurent.Ingredient;
 import com.project.mooze.Model.Restaurent.Restaurent;
 import com.project.mooze.R;

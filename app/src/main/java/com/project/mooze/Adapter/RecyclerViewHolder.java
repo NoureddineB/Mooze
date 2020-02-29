@@ -30,7 +30,6 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder {
     }
     public void updateCardUI(Restaurent restaurent, RequestManager glide){
         this.text_restaurent_name.setText(restaurent.getName());
-
         glide.load(restaurent.getImageUrl()).apply(RequestOptions.centerCropTransform()).into(image_logo);
 
     }

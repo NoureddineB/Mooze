@@ -23,7 +23,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.CustomActivity"></activity>
+        <activity android:name=".Activity.OrderInCartActivity"></activity>
+        <activity android:name=".Activity.ShoppingCartActivity" />
+        <activity android:name=".Activity.CustomActivity" />
         <activity android:name=".Activity.IngredientsActivity" />
         <activity android:name=".Activity.OrderActivity" />
         <activity android:name=".Activity.RestaurantActivity" />
@@ -41,7 +43,8 @@
 
         <activity
             android:name=".Activity.HomeActivity"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activity.MainActivity" />
         <activity android:name=".Activity.SplashActivity">
             <intent-filter>

@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.project.mooze.Activity.OrderActivity;
 import com.project.mooze.Model.Restaurent.Restaurent;
 import com.project.mooze.R;
 import com.project.mooze.Utils.MoozeStreams;
@@ -46,6 +47,7 @@ import io.reactivex.observers.DisposableObserver;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.LOCATION_SERVICE;
 import static androidx.core.content.ContextCompat.checkSelfPermission;
+import static com.project.mooze.Fragment.MainFragment.restoID;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -73,7 +75,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
@@ -83,12 +84,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             getAllRestaurent();
             configureMap();
         }
-        if (getLastKnownLocation() == null){
+        if (getLastKnownLocation() == null) {
             buildAlertMessageNoGps();
         }
         return v;
 
     }
+
+
+    private void openOrderActivity(int restaurantid) {
+        Intent intent = new Intent(getActivity(), OrderActivity.class);
+        intent.putExtra(restoID, restaurantid);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -204,7 +213,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivityForResult(intent,RESULT_OK);
+                        startActivityForResult(intent, RESULT_OK);
 
                     }
                 })
@@ -216,7 +225,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         final AlertDialog alert = builder.create();
         alert.show();
     }
-
 
 
     private void getAllRestaurent() {
@@ -262,7 +270,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 for (int i = 0; i < getRestaurent(restaurents).size(); i++) {
-                    createMarker(googleMap, getRestaurent(restaurents).get(i).getLatitude(), getRestaurent(restaurents).get(i).getLongitude(), getRestaurent(restaurents).get(i).getName(), getRestaurent(restaurents).get(i).getAddress());
+                    createMarker(googleMap, getRestaurent(restaurents).get(i).getLatitude(), getRestaurent(restaurents).get(i).getLongitude(), getRestaurent(restaurents).get(i).getName(), getRestaurent(restaurents).get(i).getAddress(),restaurents.get(i).getId());
+
                 }
             }
         });
@@ -270,18 +279,35 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    private Marker createMarker(GoogleMap googleMap, double latitude, double longitude, String title, String snippet) {
+    private Marker createMarker(GoogleMap googleMap, double latitude, double longitude, String title, String snippet,int restaurantid) {
         BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.untitled_1);
+       configureOnClick(googleMap);
         return googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(latitude, longitude))
                 .anchor(0.5f, 0.5f)
                 .title(title)
+                .zIndex(restaurantid)
                 .snippet(snippet)
                 .icon(icon));
     }
 
+    private void configureOnClick(GoogleMap googleMap){
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
 
+                openOrderActivity((int) marker.getZIndex());
+            }
+        });
+
+    }
 }
+
+
+
+
+
+
 
 
 

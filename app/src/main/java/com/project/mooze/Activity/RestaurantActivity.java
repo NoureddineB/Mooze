@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,16 +16,21 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.project.mooze.Adapter.IngredientAdapters.RecyclerDessertAdapter;
 import com.project.mooze.Adapter.IngredientAdapters.RecyclerMainAdapter;
-import com.project.mooze.Adapter.RecyclerMenuAdapter;
+import com.project.mooze.Adapter.IngredientAdapters.RecyclerMenuAdapter;
 import com.project.mooze.Adapter.IngredientAdapters.RecyclerStarterAdapter;
+import com.project.mooze.Model.CartItem;
 import com.project.mooze.Model.Restaurent.Dessert;
 import com.project.mooze.Model.Restaurent.Main;
 import com.project.mooze.Model.Restaurent.Menus;
 import com.project.mooze.Model.Restaurent.RestaurantStarter;
 import com.project.mooze.Model.Restaurent.Restaurent;
+import com.project.mooze.Model.ShoppingCart;
 import com.project.mooze.R;
+import com.project.mooze.Stripe.MoozeEphemeralKeyProvider;
+import com.project.mooze.Utils.ItemClickSupport;
 import com.project.mooze.Utils.MoozeStreams;
 import com.project.mooze.Utils.Utils;
+import com.stripe.android.CustomerSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +50,9 @@ public class RestaurantActivity extends AppCompatActivity {
     private ImageView image_dessert;
     private ImageView image_mains;
     private ImageView image_menus;
+    private ImageView image_panier;
     private TextView textView;
+    private CartItem cartItem;
 
     private Disposable disposable;
     private int restaurentid;
@@ -54,14 +63,19 @@ public class RestaurantActivity extends AppCompatActivity {
     private RecyclerDessertAdapter recyclerDessertAdapter;
     private RecyclerMainAdapter recyclerMainAdapter;
     private RecyclerView.Adapter adapter;
+    private TextView cart_size;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Utils.hideStatusBar(this);
         setContentView(R.layout.activity_restaurent);
+        CustomerSession.initCustomerSession(this, new MoozeEphemeralKeyProvider());
         instantiate();
         getAllRestaurent();
         configureRecyclerView();
+        configureOnClickRecyclerView();
+        image_menus.setActivated(true);
+
     }
 
     private void instantiate(){
@@ -71,16 +85,46 @@ public class RestaurantActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView3);
         image_dessert = findViewById(R.id.image_dessert);
         recycler_menu = findViewById(R.id.recycler_menu_ingredients);
-        this.recyclerMenuAdapter = new RecyclerMenuAdapter(this.menus, Glide.with(this));
-        this.recyclerStarterAdapter = new RecyclerStarterAdapter(this.starters, Glide.with(this));
-        this.recyclerDessertAdapter = new RecyclerDessertAdapter(this.desserts, Glide.with(this));
-        this.recyclerMainAdapter = new RecyclerMainAdapter(this.mains, Glide.with(this));
+        image_panier = findViewById(R.id.imageView_panier);
+        cart_size = findViewById(R.id.cart_size);
+        this.recyclerMenuAdapter = new RecyclerMenuAdapter(this.menus, Glide.with(this),this);
+        this.recyclerStarterAdapter = new RecyclerStarterAdapter(this.starters, Glide.with(this),this);
+        this.recyclerDessertAdapter = new RecyclerDessertAdapter(this.desserts, Glide.with(this),this);
+        this.recyclerMainAdapter = new RecyclerMainAdapter(this.mains, Glide.with(this),this);
         restaurentid = getIntent().getIntExtra(OrderActivity.restoID2,0);
         this.adapter = recyclerMenuAdapter;
     }
 
+    private void updateCartSize(){
+        if (ShoppingCart.getShoppingCartSize(this) != 0){
+            cart_size.setVisibility(View.VISIBLE);
+            cart_size.setText(String.valueOf(ShoppingCart.getShoppingCartSize(this)));
+        }
+        if (ShoppingCart.getShoppingCartSize(this) == 0){
+            cart_size.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void startShoppingCart(View v){
+        Intent intent = new Intent(RestaurantActivity.this,ShoppingCartActivity.class);
+        startActivity(intent);
+        Log.e("CARTTAG",ShoppingCart.getCart(RestaurantActivity.this) + " ué");
+
+    }
+
+    private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(recycler_menu, R.layout.recycler_menu_item)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                     updateCartSize();
 
 
+                    }
+
+                });
+
+    }
 
     @Override
     public void onDestroy() {
@@ -88,12 +132,25 @@ public class RestaurantActivity extends AppCompatActivity {
         this.disposeWhenDestroy();
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateCartSize();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateCartSize();
+
+    }
 
     public void onStarterClick(View v){
         image_menus.setActivated(false);
         image_dessert.setActivated(false);
         image_mains.setActivated(false);
-        v.setActivated(!v.isActivated());
+        v.setActivated(true);
 
         getAllRestaurent();
         adapter = recyclerStarterAdapter;
@@ -106,7 +163,7 @@ public class RestaurantActivity extends AppCompatActivity {
         image_menus.setActivated(false);
         image_dessert.setActivated(false);
         image_starter.setActivated(false);
-        v.setActivated(!v.isActivated());
+        v.setActivated(true);
 
         getAllRestaurent();
         adapter = recyclerMainAdapter;
@@ -120,7 +177,7 @@ public class RestaurantActivity extends AppCompatActivity {
         image_menus.setActivated(false);
         image_starter.setActivated(false);
         image_mains.setActivated(false);
-        v.setActivated(!v.isActivated());
+        v.setActivated(true);
 
         getAllRestaurent();
         adapter = recyclerDessertAdapter;
@@ -133,7 +190,7 @@ public class RestaurantActivity extends AppCompatActivity {
         image_starter.setActivated(false);
         image_dessert.setActivated(false);
         image_mains.setActivated(false);
-        v.setActivated(!v.isActivated());
+        v.setActivated(true);
 
         getAllRestaurent();
         adapter = recyclerMenuAdapter;
@@ -149,9 +206,11 @@ public class RestaurantActivity extends AppCompatActivity {
     private void configureRecyclerView(){
         this.recycler_menu.setAdapter(this.adapter);
         recycler_menu.setLayoutManager(new LinearLayoutManager(this));
-        Log.e("TAGMENUSRESTO15", String.valueOf(adapter));
+
 
     }
+
+
 
     private void getAllRestaurent() {
         this.disposable = MoozeStreams.getRestaurent(restaurentid).subscribeWith(create());
@@ -166,6 +225,7 @@ public class RestaurantActivity extends AppCompatActivity {
             @Override
             public void onNext(Restaurent restaurents) {
                 updateUI(restaurents);
+
 
 
 

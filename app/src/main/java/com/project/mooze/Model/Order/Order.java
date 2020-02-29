@@ -61,6 +61,11 @@ public class Order {
     @SerializedName("desserts")
     @Expose
     private List<Dessert> desserts = null;
+
+    public Order(List<Dessert> desserts) {
+        this.desserts = desserts;
+    }
+
     @SerializedName("menus")
     @Expose
     private List<Menu> menus = null;

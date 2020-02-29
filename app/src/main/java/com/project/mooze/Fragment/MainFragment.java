@@ -121,8 +121,21 @@ public class MainFragment extends Fragment {
                     }
 
                 });
+        ItemClickSupport.addTo(recycler_offer, R.layout.recycler_main_item)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        int restaurentid = recyclerViewAdapter.getRestaurents(position).getId();
+                        openOrderActivity(restaurentid);
+
+
+                    }
+
+                });
 
     }
+
+
 
     private void openOrderActivity(int restaurantid){
         Intent intent = new Intent(getActivity(), OrderActivity.class);

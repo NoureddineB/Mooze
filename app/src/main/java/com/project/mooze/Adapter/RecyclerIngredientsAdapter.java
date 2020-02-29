@@ -1,4 +1,4 @@
-package com.project.mooze.Adapter.IngredientAdapters;
+package com.project.mooze.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

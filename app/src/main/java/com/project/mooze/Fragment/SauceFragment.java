@@ -4,7 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.project.mooze.Adapter.RecyclerSauceAdapter;
@@ -23,6 +26,7 @@ import com.project.mooze.Utils.MoozeStreams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
@@ -34,6 +38,7 @@ public class SauceFragment extends Fragment {
     private List<Sauce> sauce;
     private RecyclerSauceAdapter recyclerSauceAdapter;
     private Disposable disposable;
+
 
 
     public SauceFragment() {
@@ -55,6 +60,7 @@ public class SauceFragment extends Fragment {
         recycler_sauce = view.findViewById(R.id.recycler_sauce);
         getAllRestaurent();
         configureRecyclerView();
+
         return view;
     }
 
@@ -67,6 +73,9 @@ public class SauceFragment extends Fragment {
 
     private void configureRecyclerView(){
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recycler_sauce.getContext(), layoutManager.getOrientation());
+        dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(getContext(), R.drawable.divider)));
+        recycler_sauce.addItemDecoration(dividerItemDecoration);
         this.sauce = new ArrayList<>();
         this.recyclerSauceAdapter = new RecyclerSauceAdapter(this.sauce, Glide.with(this));
         this.recycler_sauce.setAdapter(this.recyclerSauceAdapter);
@@ -106,8 +115,8 @@ public class SauceFragment extends Fragment {
         };
     }
 
-    private void configureOnClickRecyclerView(){
-        ItemClickSupport.addTo(recycler_sauce, R.layout.recycler_main_item)
+    /*private void configureOnClickRecyclerView(){
+        ItemClickSupport.addTo(recycler_sauce, R.layout.recycler_sauce_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
@@ -119,7 +128,7 @@ public class SauceFragment extends Fragment {
                 });
 
     }
-
+*/
 
 
     private void disposeWhenDestroy(){
@@ -128,6 +137,7 @@ public class SauceFragment extends Fragment {
 
 
     private void updateOffersUI(List<Sauce> sauces){
+
         sauce.addAll(sauces);
         recyclerSauceAdapter.notifyDataSetChanged();
 

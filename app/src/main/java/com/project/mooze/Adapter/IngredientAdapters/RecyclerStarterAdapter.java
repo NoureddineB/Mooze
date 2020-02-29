@@ -1,6 +1,7 @@
 package com.project.mooze.Adapter.IngredientAdapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,12 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
+import com.project.mooze.Activity.OrderInCartActivity;
 import com.project.mooze.Adapter.RecyclerMenuHolder;
+import com.project.mooze.Model.CartItem;
 import com.project.mooze.Model.Order.Starter;
 import com.project.mooze.Model.Restaurent.RestaurantStarter;
+import com.project.mooze.Model.ShoppingCart;
 import com.project.mooze.R;
 
 import java.util.List;
@@ -20,12 +24,14 @@ public class RecyclerStarterAdapter extends RecyclerView.Adapter<RecyclerMenuHol
 
     private List<RestaurantStarter> menus;
     private RequestManager glide;
+    private Context context;
 
 // CONSTRUCTOR
 
-    public RecyclerStarterAdapter(List<RestaurantStarter> menus, RequestManager glide) {
+    public RecyclerStarterAdapter(List<RestaurantStarter> menus, RequestManager glide,Context context) {
         this.menus = menus;
         this.glide = glide;
+        this.context = context;
 
     }
 
@@ -44,8 +50,19 @@ public class RecyclerStarterAdapter extends RecyclerView.Adapter<RecyclerMenuHol
 // UPDATE VIEW HOLDER WITH A GITHUBUSER
 
     @Override
-    public void onBindViewHolder(RecyclerMenuHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerMenuHolder viewHolder, final int position) {
         viewHolder.updateUI(this.menus.get(position), this.glide);
+        viewHolder.add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                notifyDataSetChanged();
+                CartItem cartItem = new CartItem(menus.get(position),1);
+                ShoppingCart shoppingCart = new ShoppingCart();
+                shoppingCart.addItem(cartItem,view.getContext());
+                Intent intent = new Intent(context, OrderInCartActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
 
     }

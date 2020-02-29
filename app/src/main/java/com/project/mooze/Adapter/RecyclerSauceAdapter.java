@@ -16,6 +16,7 @@ import java.util.List;
 public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHolder> {
     private List<Sauce> sauces;
     private RequestManager glide;
+    int index = -1;
 
 
     // CONSTRUCTOR
@@ -33,6 +34,7 @@ public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHold
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_sauce_item, parent, false);
+
         return new RecyclerSauceHolder(view);
 
     }
@@ -41,8 +43,25 @@ public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHold
 
 
     @Override
-    public void onBindViewHolder(RecyclerSauceHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerSauceHolder viewHolder, final int position) {
         viewHolder.updateCardUI(this.sauces.get(position),this.glide);
+        viewHolder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                index = position;
+                notifyDataSetChanged();
+            }
+        });
+        if(index==position){
+            if ( viewHolder.image_check.getVisibility() == View.INVISIBLE ){
+            viewHolder.image_check.setVisibility(View.VISIBLE);
+                 }else{
+                viewHolder.image_check.setVisibility(View.INVISIBLE);
+            }
+        }
+        else{
+            viewHolder.image_check.setVisibility(View.INVISIBLE);   //color on item unselecting item
+        }
 
     }
 
