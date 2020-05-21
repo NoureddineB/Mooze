@@ -6,100 +6,97 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.SettingsFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/welcome_text"
+            android:id="@+id/text_greetings"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="220dp"
-            android:text="Déconnexion"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_text"
-            app:layout_constraintVertical_bias="1.0" />
+            android:layout_marginTop="56dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:text="Connectez-vous"
+            android:textSize="18sp" />
+
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="25dp"
+            android:clickable="true"
+            android:focusable="true"
             android:text="Settings"
-
+            android:layout_marginStart="6dp"
             android:textColor="@color/colorBlack"
             android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logout_text" />
-
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/account_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
-            android:text="Privacy and terms of licence and use"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/history_text" />
-
-
-        <TextView
-            android:id="@+id/history_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="24dp"
-            android:text="Aide"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/help_text" />
+            android:layout_marginTop="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="startActivity"
+            android:layout_marginStart="18dp"
+            android:text="Mon compte" />
 
 
         <TextView
             android:id="@+id/help_text"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="32dp"
-            android:text="Historique"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/privacy_text" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="18dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="startActivity"
+            android:text="Aide" />
 
 
         <TextView
-            android:id="@+id/privacy_text"
+            android:id="@+id/policy_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="40dp"
-            android:text="Mon compte"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="18dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="startActivity"
+            android:text="Privacy and terms of licence and use"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <TextView
             android:id="@+id/logout_text"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="56dp"
-            android:text="Bonjour, Rayhan taji"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="18dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="logout"
+            android:visibility="gone"
+            android:text="Déconnexion" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="18dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="login"
+            android:text="Se connecter" />
+
+    </LinearLayout>
 
 
 </FrameLayout>

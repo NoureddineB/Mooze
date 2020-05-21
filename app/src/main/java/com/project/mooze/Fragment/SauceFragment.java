@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.project.mooze.Adapter.RecyclerSauceAdapter;
+import com.project.mooze.Model.Restaurent.Menus;
 import com.project.mooze.Model.Restaurent.Restaurent;
 import com.project.mooze.Model.Restaurent.Sauce;
 import com.project.mooze.R;
@@ -38,6 +39,13 @@ public class SauceFragment extends Fragment {
     private List<Sauce> sauce;
     private RecyclerSauceAdapter recyclerSauceAdapter;
     private Disposable disposable;
+    onSaucePass saucePasser;
+
+
+
+    public interface onSaucePass{
+        void onSaucePass(List<Sauce> sauces);
+    }
 
 
 
@@ -60,7 +68,7 @@ public class SauceFragment extends Fragment {
         recycler_sauce = view.findViewById(R.id.recycler_sauce);
         getAllRestaurent();
         configureRecyclerView();
-
+        passSauces(recyclerSauceAdapter.getSelectedSauces());
         return view;
     }
 
@@ -84,18 +92,16 @@ public class SauceFragment extends Fragment {
 
     }
     private void getAllRestaurent(){
-        this.disposable = MoozeStreams.getAllRestaurent().subscribeWith(create());
-
+        this.disposable = MoozeStreams.getMenus(1).subscribeWith(create());
     }
 
 
-    private DisposableObserver<List<Restaurent>> create(){
-        return new DisposableObserver<List<Restaurent>>() {
+    private DisposableObserver<Menus> create(){
+        return new DisposableObserver<Menus>() {
             @Override
-            public void onNext(List<Restaurent> restaurents) {
-                updateOffersUI(restaurents.get(0).getMenus().get(0).getMains().get(0).getSauces());
-                Log.e("TAGF", String.valueOf(restaurents.get(0).getMenus().get(0).getMains().get(0).getSauces()));
-                Log.e("TAGF", String.valueOf(restaurents.get(0).getMenus().get(0).getMains().get(0).getSauces().get(0).getName()));
+            public void onNext(Menus menus) {
+                updateOffersUI(menus.getMains().get(0).getSauces());
+
 
             }
             @Override
@@ -115,20 +121,8 @@ public class SauceFragment extends Fragment {
         };
     }
 
-    /*private void configureOnClickRecyclerView(){
-        ItemClickSupport.addTo(recycler_sauce, R.layout.recycler_sauce_item)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
 
 
-
-                    }
-
-                });
-
-    }
-*/
 
 
     private void disposeWhenDestroy(){
@@ -144,6 +138,15 @@ public class SauceFragment extends Fragment {
     }
 
 
+    public void passSauces(List<Sauce> sauces) {
+        saucePasser.onSaucePass(sauces);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        saucePasser= (onSaucePass) context;
+    }
 
 
 

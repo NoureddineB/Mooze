@@ -6,85 +6,19 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class MenusMain {
-    @SerializedName("id")
-    @Expose
-    private Integer id;
-    @SerializedName("name")
-    @Expose
-    private String name;
-    @SerializedName("description")
-    @Expose
-    private String description;
-    @SerializedName("price")
-    @Expose
-    private Double price;
-    @SerializedName("imageUrl")
-    @Expose
-    private String imageUrl;
+
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("restaurantId")
-    @Expose
-    private Integer restaurantId;
     @SerializedName("menuId")
     @Expose
     private Integer menuId;
-    @SerializedName("orderId")
+    @SerializedName("mainId")
     @Expose
-    private Integer orderId;
-    @SerializedName("toppings")
-    @Expose
-    private List<Topping> toppings = null;
-    @SerializedName("ingredients")
-    @Expose
-    private List<Ingredient> ingredients = null;
-    @SerializedName("sauces")
-    @Expose
-    private List<Sauce> sauces = null;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+    private Integer mainId;
 
     public String getCreatedAt() {
         return createdAt;
@@ -102,14 +36,6 @@ public class MenusMain {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
     public Integer getMenuId() {
         return menuId;
     }
@@ -118,36 +44,13 @@ public class MenusMain {
         this.menuId = menuId;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getMainId() {
+        return mainId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public List<Topping> getToppings() {
-        return toppings;
-    }
-
-    public void setToppings(List<Topping> toppings) {
-        this.toppings = toppings;
-    }
-
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
-    public List<Sauce> getSauces() {
-        return sauces;
-    }
-
-    public void setSauces(List<Sauce> sauces) {
-        this.sauces = sauces;
+    public void setMainId(Integer mainId) {
+        this.mainId = mainId;
     }
 
 }
+

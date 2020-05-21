@@ -33,38 +33,31 @@
         app:layout_constraintTop_toTopOf="@+id/guideline9"
         app:layout_constraintVertical_bias="0.0">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/shopping_cart_recyclerView"
-            android:layout_width="458dp"
-            android:layout_height="290dp"
-            android:layout_marginTop="35dp"
-            app:layout_constraintBottom_toTopOf="@+id/edit_client_message"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/shopping_cart_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </ScrollView>
 
         <com.stripe.android.view.CardInputWidget
             android:id="@+id/cardInputWidget"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/edit_client_message"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shopping_cart_recyclerView" />
-
-        <EditText
-            android:id="@+id/edit_client_message"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#faf7f1"
-            android:hint="ajouter un petit mot"
-            android:textColorHint="@color/colorlight_grey"
             app:layout_constraintBottom_toTopOf="@+id/guideline13"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -120,7 +113,6 @@
         android:id="@+id/text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="15,90€"
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
@@ -141,15 +133,32 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_white_button"
         android:text="Payer"
-        android:onClick="clearCart"
         android:textColor="#41aee9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/imageView13" />
 
+   <!-- <Button
+        android:id="@+id/clear_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Vider le panier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />-->
 
-
-
+    <Button
+        android:id="@+id/button_order_message"
+        android:layout_width="307dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="Commentaire pour la commande"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

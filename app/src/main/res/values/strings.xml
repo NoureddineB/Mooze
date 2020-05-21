@@ -10,4 +10,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="vous_pouvez_commandez_en_chemin">Vous pouvez\ncommandez en chemin</string>
 
+    <string name="already_register"><u>Deja inscris ? Connectez vous </u></string>
+
+
 </resources>

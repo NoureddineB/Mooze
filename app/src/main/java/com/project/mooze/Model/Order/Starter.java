@@ -24,31 +24,16 @@ public class Starter  {
     private Double price;
     @SerializedName("imageUrl")
     @Expose
-    private String imageUrl;
+    private Object imageUrl;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
     @SerializedName("updatedAt")
     @Expose
     private String updatedAt;
-    @SerializedName("menuId")
+    @SerializedName("restaurantId")
     @Expose
-    private Object menuId;
-    @SerializedName("orderId")
-    @Expose
-    private Integer orderId;
-    @SerializedName("sauces")
-    @Expose
-    private List<Sauce> sauces = null;
-    @SerializedName("toppings")
-    @Expose
-    private List<Topping> toppings = null;
-    @SerializedName("ingredients")
-    @Expose
-    private List<Ingredient> ingredients = null;
-
-
-
+    private Integer restaurantId;
 
     public Integer getId() {
         return id;
@@ -82,11 +67,11 @@ public class Starter  {
         this.price = price;
     }
 
-    public String getImageUrl() {
+    public Object getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(Object imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -106,43 +91,12 @@ public class Starter  {
         this.updatedAt = updatedAt;
     }
 
-    public Object getMenuId() {
-        return menuId;
+    public Integer getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setMenuId(Object menuId) {
-        this.menuId = menuId;
+    public void setRestaurantId(Integer restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public List<Sauce> getSauces() {
-        return sauces;
-    }
-
-    public void setSauces(List<Sauce> sauces) {
-        this.sauces = sauces;
-    }
-
-    public List<Topping> getToppings() {
-        return toppings;
-    }
-
-    public void setToppings(List<Topping> toppings) {
-        this.toppings = toppings;
-    }
-
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
 }

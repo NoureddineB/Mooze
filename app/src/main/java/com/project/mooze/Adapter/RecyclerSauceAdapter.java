@@ -4,17 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.project.mooze.Model.Restaurent.Sauce;
 import com.project.mooze.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHolder> {
+public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceAdapter.RecyclerSauceHolder> {
     private List<Sauce> sauces;
+    private List<Sauce> selectedSauces = new ArrayList<>();
     private RequestManager glide;
     int index = -1;
 
@@ -55,11 +62,13 @@ public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHold
         if(index==position){
             if ( viewHolder.image_check.getVisibility() == View.INVISIBLE ){
             viewHolder.image_check.setVisibility(View.VISIBLE);
+            selectedSauces.add(sauces.get(position));
                  }else{
                 viewHolder.image_check.setVisibility(View.INVISIBLE);
+                selectedSauces.remove(sauces.get(position));
             }
         }
-        else{
+        if (index != position && selectedSauces.size() == 3 ){
             viewHolder.image_check.setVisibility(View.INVISIBLE);   //color on item unselecting item
         }
 
@@ -69,7 +78,6 @@ public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHold
 
 
     @Override
-
     public int getItemCount() {
         return this.sauces.size();
 
@@ -77,5 +85,38 @@ public class RecyclerSauceAdapter extends RecyclerView.Adapter<RecyclerSauceHold
 
     public Sauce getSauces(int position){
         return this.sauces.get(position);
+    }
+    public List<Sauce> getSelectedSauces(){
+        return selectedSauces;
+    }
+
+    static class RecyclerSauceHolder extends RecyclerView.ViewHolder {
+
+        private TextView sauce_name;
+        private ImageView sauce_logo;
+        public ConstraintLayout constraintLayout;
+        public ImageView image_check;
+
+        public RecyclerSauceHolder(@NonNull View itemView) {
+            super(itemView);
+            sauce_name = itemView.findViewById(R.id.sauce_name);
+            sauce_logo = itemView.findViewById(R.id.sauce_logo);
+            image_check = itemView.findViewById(R.id.image_check);
+            constraintLayout = itemView.findViewById(R.id.constraint_sauce_layout);
+
+        }
+        public void updateCardUI(Sauce sauce, RequestManager glide){
+            this.sauce_name.setText(sauce.getName());
+            switch (sauce.getName()){
+                    case "Sauce moutarde miel":
+                        glide.load(R.drawable.mayo).apply(RequestOptions.centerCropTransform()).into(sauce_logo);
+                        break;
+                    case  "Sauce algérienne":
+                        glide.load(R.drawable.ketchup).apply(RequestOptions.centerCropTransform()).into(sauce_logo);
+                        break;
+                }
+
+
+        }
     }
 }

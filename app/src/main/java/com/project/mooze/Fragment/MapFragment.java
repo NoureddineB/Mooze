@@ -2,6 +2,7 @@ package com.project.mooze.Fragment;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -47,6 +48,7 @@ import io.reactivex.observers.DisposableObserver;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.LOCATION_SERVICE;
 import static androidx.core.content.ContextCompat.checkSelfPermission;
+import static androidx.core.content.ContextCompat.getSystemService;
 import static com.project.mooze.Fragment.MainFragment.restoID;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -68,11 +70,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap map;
     private Marker user_marker;
-    private Location bestLocation;
+
+
 
     private List<Restaurent> restaurentsList = new ArrayList<>();
     private Disposable disposable;
     private FusedLocationProviderClient fusedLocationClient;
+
+    onLocationPass locationPasser;
+
+
+
+    public interface onLocationPass{
+        void onLocationPass(Location location);
+    }
+
 
 
     @Override
@@ -80,13 +92,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         checkUserLocationPermissions();
-        if (checkUserLocationPermissions() && getLastKnownLocation() != null) {
-            getAllRestaurent();
-            configureMap();
-        }
-        if (getLastKnownLocation() == null) {
-            buildAlertMessageNoGps();
-        }
+        getAllRestaurent();
+        configureMap();
+
+
         return v;
 
     }
@@ -113,6 +122,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
 
     private void configureMap() {
+
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment == null) {
             FragmentManager fm = getFragmentManager();
@@ -120,10 +130,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mapFragment = SupportMapFragment.newInstance();
             ft.replace(R.id.map, mapFragment).commit();
         }
+
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
-                setCurrentPosition(googleMap, getLastKnownLocation().getLatitude(), getLastKnownLocation().getLongitude());
+                LocationManager mgr = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
+                if ( !mgr.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(48.8534, 2.3488), 15)); // If the user dont give his location camera focus on Paris
+                    buildAlertMessageNoGps();
+                }else {
+                    if (getLastKnownLocation() != null) {
+                        setCurrentPosition(googleMap, getLastKnownLocation().getLatitude(), getLastKnownLocation().getLongitude());
+                    }
+                }
 
             }
         });
@@ -155,6 +174,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 bestLocation = l;
             }
         }
+        passLocation(bestLocation);
         return bestLocation;
     }
 
@@ -208,16 +228,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Vous devez activez votre GPS")
+        builder.setMessage("Activez votre GPS afin de retrouver vos établissements favoris")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                         startActivityForResult(intent, RESULT_OK);
 
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Plus tard", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
                     }
@@ -241,7 +261,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onNext(List<Restaurent> restaurents) {
                 configureRestaurentMarker(restaurents);
-                Log.e("LISTRESTAURENTTAG", restaurents.get(0).getMenus().get(0).getMains().get(0).getIngredients().get(0).getName());
+
+
 
 
             }
@@ -295,11 +316,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-
                 openOrderActivity((int) marker.getZIndex());
             }
         });
 
+    }
+
+    public void passLocation(Location location) {
+        locationPasser.onLocationPass(location);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        locationPasser = (onLocationPass) context;
     }
 }
 

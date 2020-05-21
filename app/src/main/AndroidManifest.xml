@@ -23,8 +23,23 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activity.OrderInCartActivity"></activity>
-        <activity android:name=".Activity.ShoppingCartActivity" />
+        <activity android:name=".Activity.ConfirmOrderActivity"></activity>
+        <activity android:name=".Utils.DetailsActivity" />
+        <activity android:name=".Activity.HistoryActivity" />
+        <activity android:name=".Activity.AccountActivity" />
+        <activity android:name=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.RegisterActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.OrderInCartActivity" />
+        <activity
+            android:name=".Activity.ShoppingCartActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".Activity.CustomActivity" />
         <activity android:name=".Activity.IngredientsActivity" />
         <activity android:name=".Activity.OrderActivity" />
@@ -44,15 +59,16 @@
         <activity
             android:name=".Activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:windowSoftInputMode="adjustPan|stateHidden">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.MainActivity" />
     </application>
 
 </manifest>

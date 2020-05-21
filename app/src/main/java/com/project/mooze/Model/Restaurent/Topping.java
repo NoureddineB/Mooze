@@ -3,7 +3,9 @@ package com.project.mooze.Model.Restaurent;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Topping {
+import java.io.Serializable;
+
+public class Topping implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -29,6 +31,13 @@ public class Topping {
     @SerializedName("mainId")
     @Expose
     private Integer mainId;
+
+
+    public Topping(String name, Double price, String imageUrl) {
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
 
     public Integer getId() {
         return id;

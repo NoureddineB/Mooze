@@ -23,12 +23,15 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.project.mooze.Activity.OrderActivity;
+import com.project.mooze.Activity.RestaurantActivity;
 import com.project.mooze.R;
 
 import java.io.IOException;
@@ -49,6 +52,8 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
     private ZXingScannerView mScannerView;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private View qr_fragment;
+    private Button button_allow;
+    private  SharedPreferences sharedPreferences;
 
 
     public QRfragment() {
@@ -69,21 +74,31 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
         checkUserCameraPermissions();
         mScannerView = new ZXingScannerView(getActivity());
         qr_fragment = inflater.inflate(R.layout.fragment_qrfragment, container, false);
-
+        button_allow = qr_fragment.findViewById(R.id.button_allow);
+        sharedPreferences = getActivity().getSharedPreferences("PREFS",0);
+        configureButton();
         //If the user dont give the acces to his camera we show another layout telling him he need to if he want to use QR reader
         if (checkSelfPermission(Objects.requireNonNull(getActivity()), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             checkUserCameraPermissions();
             return qr_fragment;
         } else {
-            manageCamera();
+            mScannerView.stopCamera();
             return mScannerView;
         }
 
 
     }
 
+    private void configureButton(){
+        button_allow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkUserCameraPermissions();
+            }
+        });
+    }
 
-    private void manageCamera() {
+   /* private void manageCamera() {
         if (!checkIfVisible()) {
             mScannerView.stopCamera();
         }
@@ -92,7 +107,8 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
     private boolean checkIfVisible() {
         SharedPreferences preferences = getActivity().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         return preferences.getBoolean("isQRcode", true);
-    }
+    }*/
+
 
     @Override
     public void onResume() {
@@ -111,8 +127,11 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
     public void handleResult(com.google.zxing.Result rawResult) {
         Vibrator vibrator = (Vibrator) getActivity().getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(1000);
-        Uri uri = Uri.parse(rawResult.getText());
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        String result = rawResult.getText();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Intent intent = new Intent(getActivity(), OrderActivity.class);
+        editor.putInt("RESTOID", Integer.parseInt(result));
+        editor.apply();
         startActivity(intent);
         mScannerView.resumeCameraPreview(this);
     }
@@ -156,6 +175,7 @@ public class QRfragment extends Fragment implements ZXingScannerView.ResultHandl
                 .create()
                 .show();
     }
+
 
 
 }

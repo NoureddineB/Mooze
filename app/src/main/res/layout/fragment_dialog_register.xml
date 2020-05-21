@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activity.ShoppingCartActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+
+        android:background="@drawable/round_dialog_register">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bandeau"
+            android:layout_width="197dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="76dp"
+            android:background="@drawable/oioi"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bouton_ok_dialog"
+            android:layout_width="243dp"
+            android:layout_height="32dp"
+            android:background="@color/colorWhite"
+            android:elevation="2dp"
+            android:gravity="center"
+            android:text="Finalisez votre inscription"
+            android:textColor="#FF0000"
+            app:layout_constraintBottom_toTopOf="@+id/videFin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bandeau"
+            app:layout_constraintVertical_bias="0.619" />
+
+        <TextView
+            android:id="@+id/videFin"
+            android:layout_width="15dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

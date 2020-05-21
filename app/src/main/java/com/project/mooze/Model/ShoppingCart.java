@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.project.mooze.Model.Order.Starter;
+import com.project.mooze.Model.Order.Suggestion;
 import com.project.mooze.Model.Restaurent.Dessert;
 import com.project.mooze.Model.Restaurent.Main;
 import com.project.mooze.Model.Restaurent.Menus;
@@ -14,6 +15,8 @@ import java.util.List;
 import io.paperdb.Paper;
 
 public class ShoppingCart {
+
+
 
     public void addItem(CartItem cartItem,Context context) {
         List<CartItem> cart = ShoppingCart.getCart(context);
@@ -41,6 +44,9 @@ public class ShoppingCart {
         if (cartItem.object == new Menus()){
             id = cartItem.menus.getId();
         }
+        if (cartItem.object == new Suggestion()){
+            id = cartItem.suggestion.getId();
+        }
         if (cartItemList.size() == 1 && cartItemList.size() == id){
             return cartItemList.get(0);
         }else{
@@ -52,16 +58,16 @@ public class ShoppingCart {
     public void removeItem(CartItem cartItem, Context context) {
         List<CartItem> cart = ShoppingCart.getCart(context);
         CartItem targetItem = singleOrNull(cart,cartItem);
-        if (targetItem != null) {
-            if (targetItem.quantity > 0) {
-                targetItem.quantity--;
-            } else {
-                cart.remove(targetItem);
-            }
+        if (cartItem.quantity > 0) {
+            int keyLocation = cart.indexOf(cartItem);
+            cartItem.quantity--;
+            cart.remove(keyLocation+1);
         }
-
         ShoppingCart.saveCart(cart,context);
+
     }
+
+
     public static void clearCart(List<CartItem> cart,Context context) {
        if (cart != null){
            cart.clear();

@@ -18,12 +18,16 @@ public class User {
     @SerializedName("lastname")
     @Expose
     private String lastname;
+
     @SerializedName("email")
     @Expose
     private String email;
     @SerializedName("password")
     @Expose
     private String password;
+    @SerializedName("telephone")
+    @Expose
+    private String telephone;
     @SerializedName("admin")
     @Expose
     private Boolean admin;
@@ -39,14 +43,22 @@ public class User {
     @SerializedName("properties")
     @Expose
     private List<Propreties> properties = null;
-    @SerializedName("favourites")
-    @Expose
-    private List<Favourite> favourites = null;
-    @SerializedName("orders")
-    @Expose
-    private List<Order> orders = null;
 
 
+
+    public User(String name, String lastname, String email, String password,Boolean admin, String telephone) {
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.telephone = telephone;
+        this.admin = admin;
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
@@ -88,6 +100,14 @@ public class User {
         this.password = password;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
     public Boolean getAdmin() {
         return admin;
     }
@@ -126,22 +146,6 @@ public class User {
 
     public void setProperties(List<Propreties> properties) {
         this.properties = properties;
-    }
-
-    public List<Favourite> getFavourites() {
-        return favourites;
-    }
-
-    public void setFavourites(List<Favourite> favourites) {
-        this.favourites = favourites;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 
 }

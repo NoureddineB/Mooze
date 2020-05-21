@@ -42,8 +42,13 @@ public class DrinkFragment extends Fragment {
     private RecyclerDrinkAdapter recyclerDrinkAdapter;
     private Disposable disposable;
     public ImageView image_selected_drink;
+    public Drink selectedDrink = new Drink();
     private RequestManager glide;
+    OnDrinkPass drinkPasser;
 
+    public interface OnDrinkPass {
+        void onDrinkPass(Drink drink);
+    }
 
     public DrinkFragment() {
         // Required empty public constructor
@@ -90,18 +95,18 @@ public class DrinkFragment extends Fragment {
     }
 
     private void getAllRestaurent() {
-        this.disposable = MoozeStreams.getAllRestaurent().subscribeWith(create());
+        this.disposable = MoozeStreams.getRestaurent(1).subscribeWith(create());
 
     }
 
 
-    private DisposableObserver<List<Restaurent>> create() {
-        return new DisposableObserver<List<Restaurent>>() {
+    private DisposableObserver<Restaurent> create() {
+        return new DisposableObserver<Restaurent>() {
             @Override
-            public void onNext(List<Restaurent> restaurents) {
-                updateOffersUI(restaurents.get(0).getDrinks());
-                Log.e("TAGF", String.valueOf(restaurents.get(0).getMenus().get(0).getMains().get(0).getSauces()));
-                Log.e("TAGF", String.valueOf(restaurents.get(0).getMenus().get(0).getMains().get(0).getSauces().get(0).getName()));
+            public void onNext(Restaurent restaurents) {
+                updateOffersUI(restaurents.getDrinks());
+
+
 
             }
 
@@ -126,6 +131,9 @@ public class DrinkFragment extends Fragment {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Drink drink = recyclerDrinkAdapter.getDrinks(position);
+                        selectedDrink = drink;
+                        passDrink(selectedDrink);
+                        Log.e("TAG", String.valueOf(selectedDrink));
                         Log.e("TAGDRINKSSS",drink.getName());
                         if (drink.getName() == "Coca Cola") {
                             glide.load(R.drawable.coca).apply(RequestOptions.centerCropTransform()).into(image_selected_drink);
@@ -151,5 +159,14 @@ public class DrinkFragment extends Fragment {
 
     }
 
+    public void passDrink(Drink drink) {
+        drinkPasser.onDrinkPass(drink);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        drinkPasser = (OnDrinkPass) context;
+    }
 
 }

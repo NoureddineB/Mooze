@@ -3,7 +3,9 @@ package com.project.mooze.Model.Restaurent;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;

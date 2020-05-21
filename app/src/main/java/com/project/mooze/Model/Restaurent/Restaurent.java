@@ -28,6 +28,9 @@ public class Restaurent {
     @SerializedName("longitude")
     @Expose
     private Double longitude;
+    @SerializedName("type")
+    @Expose
+    private String type;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -37,9 +40,9 @@ public class Restaurent {
     @SerializedName("discountId")
     @Expose
     private Integer discountId;
-    @SerializedName("restaurantStarters")
+    @SerializedName("starters")
     @Expose
-    private List<RestaurantStarter> restaurantStarters = null;
+    private List<Starter> starters = null;
     @SerializedName("drinks")
     @Expose
     private List<Drink> drinks = null;
@@ -55,6 +58,14 @@ public class Restaurent {
     @SerializedName("discount")
     @Expose
     private Discount discount;
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+    }
 
     public Integer getId() {
         return id;
@@ -104,6 +115,14 @@ public class Restaurent {
         this.longitude = longitude;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -128,12 +147,12 @@ public class Restaurent {
         this.discountId = discountId;
     }
 
-    public List<RestaurantStarter> getRestaurantStarters() {
-        return restaurantStarters;
+    public List<Starter> getStarters() {
+        return starters;
     }
 
-    public void setRestaurantStarters(List<RestaurantStarter> restaurantStarters) {
-        this.restaurantStarters = restaurantStarters;
+    public void setStarters(List<Starter> starters) {
+        this.starters = starters;
     }
 
     public List<Drink> getDrinks() {
@@ -166,14 +185,6 @@ public class Restaurent {
 
     public void setMenus(List<Menus> menus) {
         this.menus = menus;
-    }
-
-    public Discount getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Discount discount) {
-        this.discount = discount;
     }
 
 }

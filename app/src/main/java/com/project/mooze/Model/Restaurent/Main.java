@@ -3,7 +3,9 @@ package com.project.mooze.Model.Restaurent;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Main  {
+import java.util.List;
+
+public class Main {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -28,14 +30,18 @@ public class Main  {
     @SerializedName("restaurantId")
     @Expose
     private Integer restaurantId;
-    @SerializedName("menuId")
+    @SerializedName("menuMain")
     @Expose
-    private Integer menuId;
-    @SerializedName("orderId")
+    private MenusMain menuMain;
+    @SerializedName("sauces")
     @Expose
-    private Integer orderId;
-
-
+    private List<Sauce> sauces = null;
+    @SerializedName("ingredients")
+    @Expose
+    private List<Ingredient> ingredients = null;
+    @SerializedName("toppings")
+    @Expose
+    private List<Topping> toppings = null;
 
     public Integer getId() {
         return id;
@@ -101,19 +107,37 @@ public class Main  {
         this.restaurantId = restaurantId;
     }
 
-    public Integer getMenuId() {
-        return menuId;
+    public MenusMain getMenuMain() {
+        return menuMain;
     }
 
-    public void setMenuId(Integer menuId) {
-        this.menuId = menuId;
+    public void setMenuMain(MenusMain menuMain) {
+        this.menuMain = menuMain;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public List<Sauce> getSauces() {
+        return sauces;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setSauces(List<Sauce> sauces) {
+        this.sauces = sauces;
     }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public List<Topping> getToppings() {
+        return toppings;
+    }
+
+    public void setToppings(List<Topping> toppings) {
+        this.toppings = toppings;
+    }
+
 }
+

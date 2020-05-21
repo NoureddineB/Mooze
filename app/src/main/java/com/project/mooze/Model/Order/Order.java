@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
 import com.project.mooze.Model.Restaurent.Dessert;
 import com.project.mooze.Model.Restaurent.Drink;
 import com.project.mooze.Model.Restaurent.Main;
+import com.project.mooze.Model.Restaurent.Menus;
 import com.project.mooze.Model.Restaurent.Restaurent;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class Order {
     private Integer id;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private double price;
     @SerializedName("countDown")
     @Expose
     private Integer countDown;
@@ -28,6 +29,12 @@ public class Order {
     @SerializedName("takeAway")
     @Expose
     private Boolean takeAway;
+    @SerializedName("state")
+    @Expose
+    private String state;
+    @SerializedName("archived")
+    @Expose
+    private Boolean archived;
     @SerializedName("createdAt")
     @Expose
     private String createdAt;
@@ -43,32 +50,42 @@ public class Order {
     @SerializedName("restaurantId")
     @Expose
     private Integer restaurantId;
-    @SerializedName("orderOwner")
-    @Expose
-    private OrderOwner orderOwner;
-    @SerializedName("restaurant")
-    @Expose
-    private Restaurent restaurant;
     @SerializedName("starters")
     @Expose
     private List<Starter> starters = null;
-    @SerializedName("mains")
-    @Expose
-    private List<Main> mains = null;
     @SerializedName("drinks")
     @Expose
     private List<Drink> drinks = null;
+    @SerializedName("mains")
+    @Expose
+    private List<Main> mains = null;
     @SerializedName("desserts")
     @Expose
     private List<Dessert> desserts = null;
-
-    public Order(List<Dessert> desserts) {
-        this.desserts = desserts;
-    }
-
+    @SerializedName("suggestions")
+    @Expose
+    private List<Suggestion> suggestions = null;
     @SerializedName("menus")
     @Expose
-    private List<Menu> menus = null;
+    private List<Menus> menus = null;
+
+    @SerializedName("orderComment")
+    @Expose
+    private OrderComment orderComment;
+
+    public Order(Integer userId,Integer countDown, Boolean takeAway, List<Starter> starters, List<Drink> drinks, List<Main> mains, List<Dessert> desserts, List<Suggestion> suggestions, List<Menus> menus,double price,OrderComment orderComment) {
+        this.countDown = countDown;
+        this.takeAway = takeAway;
+        this.starters = starters;
+        this.drinks = drinks;
+        this.mains = mains;
+        this.desserts = desserts;
+        this.suggestions = suggestions;
+        this.menus = menus;
+        this.price = price;
+        this.userId = userId;
+        this.orderComment = orderComment;
+    }
 
     public Integer getId() {
         return id;
@@ -78,11 +95,11 @@ public class Order {
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -108,6 +125,22 @@ public class Order {
 
     public void setTakeAway(Boolean takeAway) {
         this.takeAway = takeAway;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(Boolean archived) {
+        this.archived = archived;
     }
 
     public String getCreatedAt() {
@@ -150,36 +183,12 @@ public class Order {
         this.restaurantId = restaurantId;
     }
 
-    public OrderOwner getOrderOwner() {
-        return orderOwner;
-    }
-
-    public void setOrderOwner(OrderOwner orderOwner) {
-        this.orderOwner = orderOwner;
-    }
-
-    public Restaurent getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurent restaurant) {
-        this.restaurant = restaurant;
-    }
-
     public List<Starter> getStarters() {
         return starters;
     }
 
     public void setStarters(List<Starter> starters) {
         this.starters = starters;
-    }
-
-    public List<Main> getMains() {
-        return mains;
-    }
-
-    public void setMains(List<Main> mains) {
-        this.mains = mains;
     }
 
     public List<Drink> getDrinks() {
@@ -190,6 +199,14 @@ public class Order {
         this.drinks = drinks;
     }
 
+    public List<Main> getMains() {
+        return mains;
+    }
+
+    public void setMains(List<Main> mains) {
+        this.mains = mains;
+    }
+
     public List<Dessert> getDesserts() {
         return desserts;
     }
@@ -198,12 +215,28 @@ public class Order {
         this.desserts = desserts;
     }
 
-    public List<Menu> getMenus() {
+    public List<Suggestion> getSuggestions() {
+        return suggestions;
+    }
+
+    public void setSuggestions(List<Suggestion> suggestions) {
+        this.suggestions = suggestions;
+    }
+
+    public List<Menus> getMenus() {
         return menus;
     }
 
-    public void setMenus(List<Menu> menus) {
+    public void setMenus(List<Menus> menus) {
         this.menus = menus;
+    }
+
+    public OrderComment getOrderComment() {
+        return orderComment;
+    }
+
+    public void setOrderComment(OrderComment orderComment) {
+        this.orderComment = orderComment;
     }
 
 }

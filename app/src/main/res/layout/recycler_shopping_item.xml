@@ -24,10 +24,10 @@
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/text_quantity_main"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/text_drinkscart_name"
@@ -109,14 +109,14 @@
 
     <TextView
         android:id="@+id/text_quantity_topping"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="28dp"
+        android:layout_height="21dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="1 x"
-        android:visibility="gone"
         android:textColor="@color/colorBlack"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/text_toppingcart_name"
         app:layout_constraintEnd_toStartOf="@+id/text_toppingcart_name"
         app:layout_constraintHorizontal_bias="0.976"
@@ -151,6 +151,65 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_end="0dp" />
+
+    <ImageView
+        android:id="@+id/image_close"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/button_remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintStart_toEndOf="@+id/text_cartitem_price"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_menu_drink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/text_ingredient1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_maincart_name"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/text_ingredient1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/text_ingredient2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_ingredient2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/text_ingredient3"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_ingredient3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="(Sans) Tomtaes"
+        android:textColor="@color/colorBlack"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
